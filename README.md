@@ -1,0 +1,13 @@
+## This project uses:
+- Kotlin
+- [Retrofit](http://square.github.io/retrofit/)
+- [OkHttp](https://square.github.io/okhttp/)
+- [Gson](https://github.com/google/gson)
+- [Chuck](https://github.com/jgilfelt/chuck)
+- [Dependency injection with Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
+- [Android DataBinding Library](https://developer.android.com/topic/libraries/data-binding)
+- [Glide 3](https://github.com/bumptech/glide)
+- Clean Architecture guide line
+- MVVM as ui pattern and LiveData
+- [Coroutines](https://developer.android.com/kotlin/coroutines)
+- [Flow](https://developer.android.com/kotlin/flow)
