@@ -10,6 +10,10 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.youssef.task.R
+import com.youssef.task.business.entities.errors.ErrorTypes
+import com.youssef.task.framework.utils.ext.getMessage
+import com.youssef.task.framework.utils.ext.getType
 
 abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
 
@@ -38,6 +42,17 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
         return binding.root
     }
 
+    protected fun handleError(throwable: Throwable) {
+        when (val type = throwable.getType()) {
+            is ErrorTypes.HttpError -> handleError(
+                type.getMessage().text ?: getInternetConnectionErrorMessage()
+            )
+            else -> getInternetConnectionErrorMessage()
+        }
+    }
+
+    private fun getInternetConnectionErrorMessage() =
+        requireContext().getString(R.string.please_check_your_internet_connection)
 
     protected fun handleError(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
