@@ -7,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.youssef.task.business.entities.Game
 import com.youssef.task.business.entities.Response
 import com.youssef.task.business.usecases.abstraction.GamesUseCase
+import com.youssef.task.framework.utils.ext.catchError
 import com.youssef.task.framework.utils.states.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,7 +29,7 @@ class GamesViewModel @Inject constructor(private val useCase: GamesUseCase) : Vi
         viewModelScope.launch {
             useCase.getGames(1, 10)
                 .onStart { _gamesDataState.value = DataState.Loading }
-                .catch { _gamesDataState.value = DataState.Failure(it) }
+                .catchError { _gamesDataState.value = DataState.Failure(it) }
                 .collect { _gamesDataState.value = DataState.Success(it) }
         }
     }
