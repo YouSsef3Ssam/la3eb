@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.youssef.task.BuildConfig
 import com.youssef.task.framework.utils.Constants
-import com.youssef.task.framework.utils.Constants.Network.Companion.BASE_URL
+import com.youssef.task.framework.utils.Constants.Network.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

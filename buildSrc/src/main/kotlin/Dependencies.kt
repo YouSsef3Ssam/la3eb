@@ -36,4 +36,6 @@ object Dependencies {
     const val coil = "io.coil-kt:coil:${Versions.coil}"
     const val easyPref = "com.iamhabib:easy-preference:${Versions.easyPref}"
     const val paging = "androidx.paging:paging-runtime:${Versions.paging}"
+    const val room = "androidx.room:room-runtime:${Versions.room}"
+    const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
 }

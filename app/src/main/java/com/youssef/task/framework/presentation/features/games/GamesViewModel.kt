@@ -12,7 +12,6 @@ import com.youssef.task.framework.utils.ext.catchError
 import com.youssef.task.framework.utils.states.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,7 +28,6 @@ class GamesViewModel @Inject constructor(private val useCase: GamesUseCase) : Vi
     private fun getGames() {
         viewModelScope.launch {
             useCase.getGames().cachedIn(viewModelScope)
-                .onStart { _gamesDataState.value = DataState.Loading }
                 .catchError { _gamesDataState.value = DataState.Failure(it) }
                 .collectLatest { _gamesDataState.value = DataState.Success(it) }
         }

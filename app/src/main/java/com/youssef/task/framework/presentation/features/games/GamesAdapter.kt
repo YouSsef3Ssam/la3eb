@@ -5,8 +5,9 @@ import androidx.paging.PagingDataAdapter
 import com.youssef.task.business.entities.Game
 import com.youssef.task.framework.presentation.callback.OnItemClickListener
 import com.youssef.task.framework.presentation.diffCallback.GameDiffCallback
+import javax.inject.Inject
 
-class GamesAdapter : PagingDataAdapter<Game, GameHolder>(GameDiffCallback()) {
+class GamesAdapter @Inject constructor() : PagingDataAdapter<Game, GameHolder>(GameDiffCallback()) {
     private var onItemClickListener: OnItemClickListener<Game>? = null
     fun listen(onItemClickListener: OnItemClickListener<Game>) {
         this.onItemClickListener = onItemClickListener

@@ -4,10 +4,12 @@ import com.youssef.task.business.repositories.abstraction.GamesRepository
 import com.youssef.task.business.repositories.impl.GamesRepositoryImpl
 import com.youssef.task.business.usecases.abstraction.GamesUseCase
 import com.youssef.task.business.usecases.impl.GamesUseCaseImpl
+import com.youssef.task.framework.datasources.local.AppDatabase
+import com.youssef.task.framework.datasources.local.mappers.GamesMapper
 import com.youssef.task.framework.datasources.remote.abstraction.GamesDataSource
 import com.youssef.task.framework.datasources.remote.impl.GamesDataSourceImpl
 import com.youssef.task.framework.datasources.remote.services.GamesApi
-import com.youssef.task.framework.datasources.remotemediator.GamesPagingSource
+import com.youssef.task.framework.datasources.remotemediator.GamesRemoteMediator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,18 +32,24 @@ class GamesModule {
     fun provideGamesDataSource(gamesApi: GamesApi): GamesDataSource =
         GamesDataSourceImpl(gamesApi)
 
-    @Provides
-    @Singleton
-    fun provideGamesPagingSource(gamesApi: GamesApi): GamesPagingSource =
-        GamesPagingSource(gamesApi)
+//    @Provides
+//    @Singleton
+//    fun provideGamesRemoteMediator(
+//        api: GamesApi,
+//        database: AppDatabase,
+//        gamesMapper: GamesMapper
+//    ): GamesRemoteMediator =
+//        GamesRemoteMediator(api, database, gamesMapper)
 
     @Provides
     @Singleton
     fun provideGamesRepository(
         dataSource: GamesDataSource,
-        gamesPagingSource: GamesPagingSource
+        gamesApi: GamesApi,
+        database: AppDatabase,
+        mapper: GamesMapper
     ): GamesRepository =
-        GamesRepositoryImpl(dataSource, gamesPagingSource)
+        GamesRepositoryImpl(dataSource, gamesApi, database, mapper)
 
     @Provides
     @Singleton

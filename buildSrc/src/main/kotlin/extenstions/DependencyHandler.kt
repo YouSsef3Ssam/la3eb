@@ -98,3 +98,9 @@ fun DependencyHandler.addNavigation() {
     implementation(Dependencies.navigationUI)
     implementation(Dependencies.navigationUIKtx)
 }
+
+fun DependencyHandler.addRoom() {
+    implementation(Dependencies.room)
+    implementation(Dependencies.roomKtx)
+    kapt(AnnotationProcessors.room)
+}

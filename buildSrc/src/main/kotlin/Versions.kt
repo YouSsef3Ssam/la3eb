@@ -21,6 +21,7 @@ object Versions {
     const val coil = "2.1.0"
     const val easyPref = "1.0.1"
     const val paging = "3.1.1"
+    const val room = "2.4.0-alpha03"
 
     /**
      * Test

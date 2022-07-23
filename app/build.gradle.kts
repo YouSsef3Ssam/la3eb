@@ -93,5 +93,6 @@ dependencies {
     addNavigation()
     addHilt()
     addNetwork()
+    addRoom()
     addTestsDependencies()
 }

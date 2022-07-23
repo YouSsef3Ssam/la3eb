@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GamesUseCaseImpl @Inject constructor(private val repository: GamesRepository) : GamesUseCase {
-    override suspend fun getGames(): Flow<PagingData<Game>> =
+    override fun getGames(): Flow<PagingData<Game>> =
         repository.getGames()
 
-    override suspend fun getGameById(gameId: Int): Flow<Game> = repository.getGameById(gameId)
+    override suspend fun getGameById(gameId: String): Flow<Game> = repository.getGameById(gameId)
 
 }

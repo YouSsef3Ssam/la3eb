@@ -29,8 +29,7 @@
 
         <argument
             android:name="gameId"
-            app:argType="integer"
-            app:nullable="false" />
+            app:argType="string" />
     </fragment>
 
 </navigation>

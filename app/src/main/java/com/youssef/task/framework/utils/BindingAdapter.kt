@@ -16,8 +16,8 @@ import com.youssef.task.R
 fun ImageView.loadImage(imageUrl: String?, @DrawableRes placeholder: Int?) {
     this.load(imageUrl) {
         placeholder(placeholder ?: R.drawable.ic_image_placeholder)
-        fallback(placeholder ?: R.drawable.ic_image_placeholder)
-        error(placeholder ?: R.drawable.ic_image_placeholder)
+        fallback(R.drawable.image_not_found)
+        error(R.drawable.image_not_found)
         diskCachePolicy(CachePolicy.ENABLED)
         memoryCachePolicy(CachePolicy.ENABLED)
     }
