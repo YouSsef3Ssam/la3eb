@@ -7,6 +7,7 @@ import com.youssef.task.business.usecases.impl.GamesUseCaseImpl
 import com.youssef.task.framework.datasources.remote.abstraction.GamesDataSource
 import com.youssef.task.framework.datasources.remote.impl.GamesDataSourceImpl
 import com.youssef.task.framework.datasources.remote.services.GamesApi
+import com.youssef.task.framework.datasources.remotemediator.GamesPagingSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,8 +21,9 @@ class GamesModule {
 
     @Provides
     @Singleton
-    fun provideUserApi(retrofit: Retrofit): GamesApi =
+    fun provideGamesApi(retrofit: Retrofit): GamesApi =
         retrofit.create(GamesApi::class.java)
+
 
     @Provides
     @Singleton
@@ -30,8 +32,16 @@ class GamesModule {
 
     @Provides
     @Singleton
-    fun provideGamesRepository(authDataSource: GamesDataSource): GamesRepository =
-        GamesRepositoryImpl(authDataSource)
+    fun provideGamesPagingSource(gamesApi: GamesApi): GamesPagingSource =
+        GamesPagingSource(gamesApi)
+
+    @Provides
+    @Singleton
+    fun provideGamesRepository(
+        dataSource: GamesDataSource,
+        gamesPagingSource: GamesPagingSource
+    ): GamesRepository =
+        GamesRepositoryImpl(dataSource, gamesPagingSource)
 
     @Provides
     @Singleton

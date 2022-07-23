@@ -20,6 +20,7 @@ object Versions {
     const val navigation = "2.5.0"
     const val coil = "2.1.0"
     const val easyPref = "1.0.1"
+    const val paging = "3.1.1"
 
     /**
      * Test

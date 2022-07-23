@@ -28,7 +28,8 @@ interface Constants {
     }
 
     companion object {
-        const val UNREACHABLE_STATEMENT = "Unreachable Statement"
+        const val API_STARTING_PAGE_INDEX = 1
+        const val PAGE_SIZE = 10
     }
 
 }

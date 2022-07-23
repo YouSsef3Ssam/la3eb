@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="game"
+            type="com.youssef.task.business.entities.Game" />
+
+        <variable
+            name="listener"
+            type="com.youssef.task.framework.presentation.callback.OnItemClickListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:elevation="2dp"
+        app:cardCornerRadius="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="@{() -> listener.onItemClicked(game)}"
+            android:paddingBottom="8dp">
+
+
+            <ImageView
+                android:id="@+id/gameImage"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:contentDescription="@string/game_image_cd"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{game.image}"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/gameName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/cairo_bold"
+                android:text="@{game.name}"
+                android:textColor="@color/colorText"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/gameImage"
+                tools:text="Borderlands 2" />
+
+            <RatingBar
+                android:id="@+id/gameRating"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:rating="@{game.rating}"
+                app:layout_constraintStart_toStartOf="@id/gameName"
+                app:layout_constraintTop_toBottomOf="@id/gameName" />
+
+            <TextView
+                android:id="@+id/gameRatingCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:fontFamily="@font/cairo_semi_bold"
+                android:text="@{@string/game_rating(game.ratingsCount)}"
+                android:textColor="@color/colorAccent"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/gameRating"
+                app:layout_constraintStart_toEndOf="@id/gameRating"
+                app:layout_constraintTop_toTopOf="@id/gameRating"
+                tools:text="(12)" />
+
+
+            <TextView
+                android:id="@+id/gameReleaseDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/cairo_regular"
+                android:gravity="end"
+                android:text="@{game.released}"
+                android:textColor="@color/colorText"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/gameRating"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/gameRatingCount"
+                app:layout_constraintTop_toTopOf="@id/gameRating"
+                tools:text="2022-07-23" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

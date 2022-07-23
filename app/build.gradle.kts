@@ -87,6 +87,7 @@ dependencies {
     implementation(Dependencies.coil)
     implementation(Dependencies.easyPref)
     implementation(Dependencies.lifecycle)
+    implementation(Dependencies.paging)
 
     addRecyclerView()
     addNavigation()
