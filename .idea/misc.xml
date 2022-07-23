@@ -96,6 +96,7 @@
         <entry key="app/src/main/res/layout/item_category_search.xml" value="0.375" />
         <entry key="app/src/main/res/layout/item_fact.xml" value="0.1838768115942029" />
         <entry key="app/src/main/res/layout/item_game.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/item_game_placeholder.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_order.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_order_loading.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_post.xml" value="0.1838768115942029" />
@@ -104,6 +105,7 @@
         <entry key="app/src/main/res/layout/item_spinner_with_image.xml" value="0.335" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.14361702127659576" />
         <entry key="app/src/main/res/layout/loading_dialog.xml" value="0.14361702127659576" />
+        <entry key="app/src/main/res/layout/loading_layout.xml" value="0.14285714285714285" />
         <entry key="app/src/main/res/layout/paginated_recyclerview.xml" value="0.1838768115942029" />
         <entry key="app/src/main/res/menu/navigation_bottom.xml" value="0.1578125" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />

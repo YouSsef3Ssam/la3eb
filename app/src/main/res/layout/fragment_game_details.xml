@@ -5,15 +5,31 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
-            name="gameId"
-            type="Integer" />
+            name="loading"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="game"
+            type="com.youssef.task.business.entities.Game" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".framework.presentation.features.gameDetails.GameDetailsFragment">
+
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{loading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/backBtn"
@@ -26,15 +42,67 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/gameImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:contentDescription="@string/game_image_cd"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{game.image}"
+            app:layout_constraintTop_toBottomOf="@+id/backBtn" />
+
         <TextView
+            android:id="@+id/gameName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/cairo_bold"
+            android:maxLines="1"
+            android:text="@{game.name}"
+            android:textColor="@color/colorText"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/gameImage"
+            tools:text="Borderlands 2" />
+
+        <RatingBar
+            android:id="@+id/gameRating"
+            style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{`Game Details, ` + gameId}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Game Details, 1" />
+            android:layout_marginTop="8dp"
+            android:rating="@{game.rating}"
+            app:layout_constraintStart_toStartOf="@id/gameName"
+            app:layout_constraintTop_toBottomOf="@id/gameName" />
 
+        <TextView
+            android:id="@+id/gameRatingCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:fontFamily="@font/cairo_semi_bold"
+            android:text="@{@string/game_rating(game.ratingsCount)}"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/gameRating"
+            app:layout_constraintStart_toEndOf="@id/gameRating"
+            app:layout_constraintTop_toTopOf="@id/gameRating"
+            tools:text="(12)" />
+
+
+        <TextView
+            android:id="@+id/gameReleaseDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/cairo_regular"
+            android:gravity="end"
+            android:text="@{game.released}"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/gameRating"
+            app:layout_constraintTop_toBottomOf="@id/gameRating"
+            tools:text="2022-07-23" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

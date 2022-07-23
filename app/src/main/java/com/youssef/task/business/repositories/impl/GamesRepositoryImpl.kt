@@ -10,10 +10,9 @@ import com.youssef.task.framework.datasources.remote.services.GamesApi
 import com.youssef.task.framework.datasources.remotemediator.GamesRemoteMediator
 import com.youssef.task.framework.utils.Constants
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
+import retrofit2.HttpException
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class GamesRepositoryImpl @Inject constructor(
@@ -40,8 +39,20 @@ class GamesRepositoryImpl @Inject constructor(
             .flowOn(Dispatchers.IO)
 
     override suspend fun getGameById(gameId: String): Flow<Game> = flow {
-        emit(dataSource.getGameById(gameId))
+        try {
+            val game = dataSource.getGameById(gameId)
+            database.gamesDao().insertOne(mapper.mapToEntity(game))
+            emit(dataSource.getGameById(gameId))
+        } catch (e: HttpException) {
+            getGameByIdFromLocal(gameId)
+        } catch (e: UnknownHostException) {
+            getGameByIdFromLocal(gameId)
+        }
     }.flowOn(Dispatchers.IO)
 
+    private suspend fun FlowCollector<Game>.getGameByIdFromLocal(gameId: String) {
+        val gameEntity = database.gamesDao().getGameById(gameId)
+        emit(mapper.mapFromEntity(gameEntity))
+    }
 
 }
