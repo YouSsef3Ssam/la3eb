@@ -9,7 +9,6 @@ import com.youssef.task.framework.datasources.local.mappers.GamesMapper
 import com.youssef.task.framework.datasources.remote.abstraction.GamesDataSource
 import com.youssef.task.framework.datasources.remote.impl.GamesDataSourceImpl
 import com.youssef.task.framework.datasources.remote.services.GamesApi
-import com.youssef.task.framework.datasources.remotemediator.GamesRemoteMediator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,15 +30,6 @@ class GamesModule {
     @Singleton
     fun provideGamesDataSource(gamesApi: GamesApi): GamesDataSource =
         GamesDataSourceImpl(gamesApi)
-
-//    @Provides
-//    @Singleton
-//    fun provideGamesRemoteMediator(
-//        api: GamesApi,
-//        database: AppDatabase,
-//        gamesMapper: GamesMapper
-//    ): GamesRemoteMediator =
-//        GamesRemoteMediator(api, database, gamesMapper)
 
     @Provides
     @Singleton

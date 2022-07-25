@@ -4,7 +4,7 @@ object TestDependencies {
     const val mockitoFramework = "org.mockito:mockito-core:${Versions.mockitoFramework}"
     const val mockk = "io.mockk:mockk:${Versions.mockk}"
     const val coroutinesTest =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutinesTest}"
+        "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
     const val coreTest = "androidx.arch.core:core-testing:${Versions.coreTest}"
 
     /**

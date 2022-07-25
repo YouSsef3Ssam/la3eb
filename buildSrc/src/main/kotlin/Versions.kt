@@ -27,7 +27,6 @@ object Versions {
     const val jUnit = "4.13.2"
     const val mockitoFramework = "4.6.1"
     const val mockk = "1.12.4"
-    const val coroutinesTest = "1.6.4"
     const val coreTest = "2.1.0"
 
     /** UI Test */

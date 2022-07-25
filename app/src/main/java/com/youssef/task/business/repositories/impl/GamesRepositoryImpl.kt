@@ -23,7 +23,7 @@ class GamesRepositoryImpl @Inject constructor(
 ) : GamesRepository {
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun getGames(): Flow<PagingData<Game>> =
+    override suspend fun getGames(): Flow<PagingData<Game>> =
         Pager(
             config = PagingConfig(
                 enablePlaceholders = false,
@@ -42,7 +42,7 @@ class GamesRepositoryImpl @Inject constructor(
         try {
             val game = dataSource.getGameById(gameId)
             database.gamesDao().insertOne(mapper.mapToEntity(game))
-            emit(dataSource.getGameById(gameId))
+            emit(game)
         } catch (e: HttpException) {
             getGameByIdFromLocal(gameId)
         } catch (e: UnknownHostException) {
