@@ -10,15 +10,22 @@ import com.youssef.task.framework.datasources.local.mappers.GamesMapper
 import com.youssef.task.framework.datasources.remote.abstraction.GamesDataSource
 import com.youssef.task.framework.datasources.remote.services.GamesApi
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockkClass
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.runBlocking
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.HttpException
+import retrofit2.Response
+import java.net.UnknownHostException
 
 @RunWith(MockitoJUnitRunner::class)
 class GamesRepositoryTest {
@@ -34,12 +41,17 @@ class GamesRepositoryTest {
     private val game = mockkClass(Game::class)
     private val gameEntity = mockkClass(GameEntity::class)
     private val exception = RuntimeException("Can't get the game")
+    private val unknownHostException = UnknownHostException()
+    private val httpException = HttpException(
+        Response.error<Game>(400, "".toResponseBody("application/json".toMediaTypeOrNull()))
+    )
 
     @Before
     fun setUp() {
         repository = GamesRepositoryImpl(dataSource, api, database, mapper)
         every { database.gamesDao() } returns gamesDao
         every { mapper.mapToEntity(game) } returns gameEntity
+        every { mapper.mapFromEntity(gameEntity) } returns game
     }
 
 
@@ -76,5 +88,47 @@ class GamesRepositoryTest {
         assertEquals(exception.message, error!!.message)
     }
 
+    @Test
+    fun `getGameFromLocal with success response then return success`() = runBlocking {
+        coEvery { gamesDao.getGameById(any()) } returns gameEntity
+        val response = repository.getGameFromLocal("123")
+        assertEquals(game, response)
+    }
 
+    @Test
+    fun `getGameById with UnknownHostException then return local game`() = runBlocking {
+        coEvery { dataSource.getGameById(any()) } answers { throw unknownHostException }
+        coEvery { gamesDao.getGameById(any()) } returns gameEntity
+        val response = repository.getGameById("123")
+
+        var success: Game? = null
+        var error: Throwable? = null
+
+        response
+            .catch { error = it }
+            .collect { success = it }
+
+        coVerify { gamesDao.getGameById(any()) }
+        assertNotNull(success)
+        assertNull(error)
+        assertEquals(game, success)
+    }
+
+    @Test
+    fun `getGameById with HttpException then return local game`() = runBlocking {
+        coEvery { dataSource.getGameById(any()) } answers { throw httpException }
+        coEvery { gamesDao.getGameById(any()) } returns gameEntity
+        val response = repository.getGameById("123")
+
+        var success: Game? = null
+        var error: Throwable? = null
+        response
+            .catch { error = it }
+            .collect { success = it }
+
+        coVerify { gamesDao.getGameById(any()) }
+        assertNotNull(success)
+        assertNull(error)
+        assertEquals(game, success)
+    }
 }
