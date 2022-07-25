@@ -10,7 +10,6 @@ import com.youssef.task.framework.datasources.local.mappers.GamesMapper
 import com.youssef.task.framework.datasources.remote.abstraction.GamesDataSource
 import com.youssef.task.framework.datasources.remote.services.GamesApi
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockkClass
 import kotlinx.coroutines.flow.catch
@@ -41,7 +40,6 @@ class GamesRepositoryTest {
         repository = GamesRepositoryImpl(dataSource, api, database, mapper)
         every { database.gamesDao() } returns gamesDao
         every { mapper.mapToEntity(game) } returns gameEntity
-        coEvery { gamesDao.insertOne(gameEntity) } answers { 1L }
     }
 
 
@@ -56,15 +54,13 @@ class GamesRepositoryTest {
             .catch { error = it }
             .collect { success = it }
 
-        coVerify { mapper.mapToEntity(game) }
-        coVerify { gamesDao.insertOne(gameEntity) }
         assertNotNull(success)
         assertNull(error)
         assertEquals(game, success)
     }
 
     @Test
-    fun `getProfile with failure response then return error`() = runBlocking {
+    fun `getGameById with failure response then return error`() = runBlocking {
         coEvery { dataSource.getGameById(any()) } answers { throw exception }
         val response = repository.getGameById("123")
 

@@ -3,6 +3,7 @@ package com.youssef.task.framework.presentation.features.games
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import com.youssef.task.R
 import com.youssef.task.business.entities.Game
 import com.youssef.task.databinding.FragmentGamesBinding
@@ -45,13 +46,16 @@ class GamesFragment : BaseFragment<FragmentGamesBinding>() {
     private fun subscribeOnViewObservers() {
         viewModel.gamesDataState.observe(viewLifecycleOwner) {
             when (it) {
-                is DataState.Success ->
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        adapter.submitData(it.data)
-                    }
+                is DataState.Success -> submitData(it.data)
                 is DataState.Failure -> handleError(it.throwable)
                 DataState.Loading -> Timber.d(Constants.UNREACHABLE_STATEMENT)
             }
+        }
+    }
+
+    private fun submitData(data: PagingData<Game>) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapter.submitData(data)
         }
     }
 

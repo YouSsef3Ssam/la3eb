@@ -5,6 +5,7 @@ import com.youssef.task.business.entities.Game
 import kotlinx.coroutines.flow.Flow
 
 interface GamesRepository {
-    suspend fun getGames(): Flow<PagingData<Game>>
+    fun getGames(): Flow<PagingData<Game>>
     suspend fun getGameById(gameId: String): Flow<Game>
+    suspend fun getGameFromLocal(gameId: String): Game
 }

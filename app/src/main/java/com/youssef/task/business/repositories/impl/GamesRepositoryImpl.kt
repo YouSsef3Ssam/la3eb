@@ -10,7 +10,10 @@ import com.youssef.task.framework.datasources.remote.services.GamesApi
 import com.youssef.task.framework.datasources.remotemediator.GamesRemoteMediator
 import com.youssef.task.framework.utils.Constants
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -23,7 +26,7 @@ class GamesRepositoryImpl @Inject constructor(
 ) : GamesRepository {
 
     @OptIn(ExperimentalPagingApi::class)
-    override suspend fun getGames(): Flow<PagingData<Game>> =
+    override fun getGames(): Flow<PagingData<Game>> =
         Pager(
             config = PagingConfig(
                 enablePlaceholders = false,
@@ -40,19 +43,15 @@ class GamesRepositoryImpl @Inject constructor(
 
     override suspend fun getGameById(gameId: String): Flow<Game> = flow {
         try {
-            val game = dataSource.getGameById(gameId)
-            database.gamesDao().insertOne(mapper.mapToEntity(game))
-            emit(game)
+            emit(dataSource.getGameById(gameId))
         } catch (e: HttpException) {
-            getGameByIdFromLocal(gameId)
+            emit(getGameFromLocal(gameId))
         } catch (e: UnknownHostException) {
-            getGameByIdFromLocal(gameId)
+            emit(getGameFromLocal(gameId))
         }
     }.flowOn(Dispatchers.IO)
 
-    private suspend fun FlowCollector<Game>.getGameByIdFromLocal(gameId: String) {
-        val gameEntity = database.gamesDao().getGameById(gameId)
-        emit(mapper.mapFromEntity(gameEntity))
-    }
+    override suspend fun getGameFromLocal(gameId: String): Game =
+        mapper.mapFromEntity(database.gamesDao().getGameById(gameId))
 
 }

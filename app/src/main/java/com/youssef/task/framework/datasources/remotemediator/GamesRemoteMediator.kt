@@ -82,8 +82,8 @@ class GamesRemoteMediator @Inject constructor(
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, GameEntity>): GameKeyEntity? {
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.id?.let { postId ->
-                database.gamesKeysDao().getKeyByGameId(postId)
+            state.closestItemToPosition(position)?.id?.let { gameId ->
+                database.gamesKeysDao().getKeyByGameId(gameId)
             }
         }
     }
