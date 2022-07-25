@@ -22,3 +22,4 @@
 ## What can be improved
 - Migrating from XML to Jetpack compose
 - Add more test cases
+- Adding refresh functionality
