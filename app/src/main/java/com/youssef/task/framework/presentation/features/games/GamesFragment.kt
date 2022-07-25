@@ -2,7 +2,6 @@ package com.youssef.task.framework.presentation.features.games
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.paging.PagingData
 import com.youssef.task.R
 import com.youssef.task.business.entities.Game
@@ -10,6 +9,8 @@ import com.youssef.task.databinding.FragmentGamesBinding
 import com.youssef.task.framework.presentation.callback.OnItemClickListener
 import com.youssef.task.framework.presentation.features.base.BaseFragment
 import com.youssef.task.framework.utils.Constants
+import com.youssef.task.framework.utils.ext.error
+import com.youssef.task.framework.utils.ext.isLoading
 import com.youssef.task.framework.utils.ext.navigateTo
 import com.youssef.task.framework.utils.states.DataState
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +39,10 @@ class GamesFragment : BaseFragment<FragmentGamesBinding>() {
         })
         binding.gamesRV.adapter = adapter
         adapter.addLoadStateListener { loadState ->
-            binding.loading = loadState.mediator?.refresh is LoadState.Loading
+            loadState.refresh.apply {
+                binding.loading = this.isLoading()
+                this.error { handleError(it) }
+            }
         }
 
     }

@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import timber.log.Timber
 
 
@@ -28,10 +29,7 @@ fun NavController.navigateSafe(direction: NavDirections) {
     currentDestination?.getAction(direction.actionId)?.run { navigate(direction) }
 }
 
-fun accessibleIndex(
-    predicate: () -> Int,
-    accessible: (index: Int) -> Unit,
-    notAccessible: () -> Unit
-) {
-    return if (predicate() != -1) accessible(predicate()) else notAccessible()
+fun LoadState.isLoading(): Boolean = this is LoadState.Loading
+fun LoadState.error(errorHandler: (Throwable) -> Unit) {
+    if (this is LoadState.Error) errorHandler.invoke(error)
 }
