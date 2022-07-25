@@ -66,11 +66,22 @@ fun DependencyHandler.androidTestImplementation(dependencyNotation: String): Dep
 fun DependencyHandler.kapt(dependencyNotation: String): Dependency? =
     add("kapt", dependencyNotation)
 
-
 fun DependencyHandler.addTestsDependencies() {
+    addUnitTestDependencies()
+    addUiTestDependencies()
+}
+
+fun DependencyHandler.addUnitTestDependencies() {
     testImplementation(TestDependencies.junit)
-    androidTestImplementation(TestDependencies.junitTest)
+    testImplementation(TestDependencies.mockitoFramework)
+    testImplementation(TestDependencies.mockk)
+    testImplementation(TestDependencies.coroutinesTest)
+    testImplementation(TestDependencies.coreTest)
+}
+
+fun DependencyHandler.addUiTestDependencies() {
     androidTestImplementation(TestDependencies.espresso)
+    androidTestImplementation(TestDependencies.junitTest)
 }
 
 fun DependencyHandler.addHilt() {
