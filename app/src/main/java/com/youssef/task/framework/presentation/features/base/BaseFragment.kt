@@ -43,12 +43,11 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment() {
     }
 
     protected fun handleError(throwable: Throwable) {
-        when (val type = throwable.getType()) {
-            is ErrorTypes.HttpError -> handleError(
-                type.getMessage().text ?: getInternetConnectionErrorMessage()
-            )
+        val errorMessage = when (val type = throwable.getType()) {
+            is ErrorTypes.HttpError -> type.getMessage().text ?: getInternetConnectionErrorMessage()
             else -> getInternetConnectionErrorMessage()
         }
+        handleError(errorMessage)
     }
 
     private fun getInternetConnectionErrorMessage() =
