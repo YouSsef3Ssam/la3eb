@@ -17,6 +17,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gameDetailsFragmentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".framework.presentation.features.gameDetails.GameDetailsFragment">

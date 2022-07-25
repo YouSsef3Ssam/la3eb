@@ -4,10 +4,10 @@ import androidx.lifecycle.*
 import com.youssef.task.business.entities.Game
 import com.youssef.task.business.usecases.abstraction.GamesUseCase
 import com.youssef.task.framework.utils.ext.catchError
+import com.youssef.task.framework.utils.ext.launchIdling
 import com.youssef.task.framework.utils.states.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,7 +26,7 @@ class GameDetailsViewModel @Inject constructor(
     }
 
     private fun getGames(gameId: String) {
-        viewModelScope.launch {
+        viewModelScope.launchIdling {
             useCase.getGameById(gameId)
                 .onStart { _gameDataState.value = DataState.Loading }
                 .catchError { _gameDataState.value = DataState.Failure(it) }

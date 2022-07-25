@@ -7,10 +7,8 @@ import androidx.databinding.DataBindingUtil
 import com.youssef.task.R
 import com.youssef.task.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.FlowPreview
 
 
-@FlowPreview
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null

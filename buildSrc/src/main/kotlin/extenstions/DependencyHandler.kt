@@ -80,8 +80,11 @@ fun DependencyHandler.addUnitTestDependencies() {
 }
 
 fun DependencyHandler.addUiTestDependencies() {
-    androidTestImplementation(TestDependencies.espresso)
     androidTestImplementation(TestDependencies.junitTest)
+    androidTestImplementation(TestDependencies.espresso)
+    androidTestImplementation(TestDependencies.espressoIntents)
+    androidTestImplementation(TestDependencies.espressoContrib)
+    implementation(TestDependencies.espressoIdling)
 }
 
 fun DependencyHandler.addHilt() {

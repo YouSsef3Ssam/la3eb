@@ -9,10 +9,10 @@ import androidx.paging.cachedIn
 import com.youssef.task.business.entities.Game
 import com.youssef.task.business.usecases.abstraction.GamesUseCase
 import com.youssef.task.framework.utils.ext.catchError
+import com.youssef.task.framework.utils.ext.launchIdling
 import com.youssef.task.framework.utils.states.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,7 +26,7 @@ class GamesViewModel @Inject constructor(private val useCase: GamesUseCase) : Vi
     }
 
     private fun getGames() {
-        viewModelScope.launch {
+        viewModelScope.launchIdling {
             useCase.getGames().cachedIn(viewModelScope)
                 .catchError { _gamesDataState.value = DataState.Failure(it) }
                 .collectLatest { _gamesDataState.value = DataState.Success(it) }

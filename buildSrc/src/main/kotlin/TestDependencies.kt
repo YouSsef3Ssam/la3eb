@@ -12,4 +12,8 @@ object TestDependencies {
      */
     const val junitTest = "androidx.test.ext:junit:${Versions.jUnitTest}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    const val espressoIntents = "androidx.test.espresso:espresso-intents:${Versions.espresso}"
+    const val espressoContrib = "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
+    const val espressoIdling =
+        "androidx.test.espresso:espresso-idling-resource:${Versions.espresso}"
 }

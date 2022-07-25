@@ -15,16 +15,17 @@
     </data>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/gameItemLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
+        android:onClick="@{() -> listener.onItemClicked(game)}"
         android:elevation="2dp"
         app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:onClick="@{() -> listener.onItemClicked(game)}"
             android:paddingBottom="8dp">
 
 

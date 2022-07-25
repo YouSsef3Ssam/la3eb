@@ -9,6 +9,7 @@ import com.youssef.task.databinding.FragmentGamesBinding
 import com.youssef.task.framework.presentation.callback.OnItemClickListener
 import com.youssef.task.framework.presentation.features.base.BaseFragment
 import com.youssef.task.framework.utils.Constants
+import com.youssef.task.framework.utils.EspressoIdlingResource
 import com.youssef.task.framework.utils.ext.error
 import com.youssef.task.framework.utils.ext.isLoading
 import com.youssef.task.framework.utils.ext.navigateTo
@@ -60,6 +61,7 @@ class GamesFragment : BaseFragment<FragmentGamesBinding>() {
     private fun submitData(data: PagingData<Game>) {
         viewLifecycleOwner.lifecycleScope.launch {
             adapter.submitData(data)
+            EspressoIdlingResource.decrement()
         }
     }
 
