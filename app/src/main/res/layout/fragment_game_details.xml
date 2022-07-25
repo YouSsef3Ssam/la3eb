@@ -22,9 +22,10 @@
         tools:context=".framework.presentation.features.gameDetails.GameDetailsFragment">
 
 
-        <ProgressBar
+        <include
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            layout="@layout/loading_layout"
             android:visibility="@{loading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
